@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+  /* background-color: #F9F9F9; */
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+ 
+  color: #0b1D27;
+  /* background-color: aqua; */
+  font-family: "Urbanist", sans-serif;
+ 
+  /* background-color: #ffe4c4; */
+  /* text-align: center; */
+}
+
+#homeherosection{
+  
+  background-image: url(assets/banner/homebanner.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-position: center; */
+}
+
+#loginPage,#signupPage{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+#homehero2{
+  background: hsla(0, 0%, 98%, 1);
+
+  background: linear-gradient(135deg, hsla(0, 0%, 98%, 1) 0%, hsla(203, 35%, 57%, 1) 100%);
+  
+  background: -moz-linear-gradient(135deg, hsla(0, 0%, 98%, 1) 0%, hsla(203, 35%, 57%, 1) 100%);
+  
+  background: -webkit-linear-gradient(135deg, hsla(0, 0%, 98%, 1) 0%, hsla(203, 35%, 57%, 1) 100%);
+  
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F9F9F9", endColorstr="#6B9AB8", GradientType=1 );
+  
+
+
+}
+#heroimg{
+  background-image: url(assets/banner/hero2.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+}
+#banner2{
+  background-image: url(assets/banner/banner2.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
