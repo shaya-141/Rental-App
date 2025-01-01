@@ -98,7 +98,7 @@ function AddPropertyFormStructure() {
             // Reference to Firestore collection
             setLoading(true)
             const propertiesCollection = collection(db, `properties/${UserId}/myproperties`);
-
+            const AllPropertiesCollection = collection(db,'AllProperties')
             // Upload images to Cloudinary
             const imageUrls = await Promise.all(
                 formData.images.map((imageFile) => uploadImageToCloudinary(imageFile))
@@ -115,6 +115,7 @@ function AddPropertyFormStructure() {
 
             // Save the property data to Firestore
             const docRef = await addDoc(propertiesCollection, dataToSave);
+            const secounddocRef = await addDoc(AllPropertiesCollection, dataToSave);
 
             console.log("Document written with ID: ", docRef.id);
             toast.success("Property added successfully!");

@@ -14,6 +14,8 @@ import { AuthProvider, useAuthContext } from './Context/Auth'
 import Profile from './pages/Profile'
 import Protection from './Components/ProtectionRoute/Protection'
 import { FilesProvider } from './Context/GetUserFilesFromFirebase'
+import Properties from './pages/Properties'
+import { AllPropertiesProvider } from './Context/GetAllPropertise'
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
 
       <BrowserRouter>
         <AuthProvider>
+          <AllPropertiesProvider>
+
           <FilesProvider>
 
 
@@ -37,6 +41,7 @@ function App() {
                 <Route path='/login' element={<Login></Login>}></Route>
                 <Route path='/signup' element={<Signup></Signup>}></Route>
                 <Route path='/dashboard' element={<Dashboard></Dashboard>}> </Route>
+                <Route path='/propertise' element={<Properties></Properties>}></Route>
                 {/* <Route path='/profile' element={<Profile></Profile>}></Route> */}
 
               </Routes>
@@ -44,6 +49,7 @@ function App() {
 
             </DashboardProvider>
           </FilesProvider>
+          </AllPropertiesProvider>
         </AuthProvider>
       </BrowserRouter>
     </>

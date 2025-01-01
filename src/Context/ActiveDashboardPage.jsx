@@ -8,13 +8,15 @@ export const DashboardProvider = ({ children }) => {
     const [activePage, setActivePage] = useState('properties'); // Default value
     const [check, setcheck] = useState('check')
     const [currentPage, setcurrentPage] = useState('propertise')
+    const [PropertyDetailShowOrNot, setPropertyDetailShowOrNot] = useState(false)
     const [PropertyFormShowOrNot, setPropertyFormShowOrNot] = useState(false)
+
     
     let a = 'ahfah'
 //   console.log('Active Page in Provider:', activePage); // Debugging
 
   return (
-    <DashboardContext.Provider value={{currentPage,setcurrentPage, a,check ,PropertyFormShowOrNot, setPropertyFormShowOrNot}}>
+    <DashboardContext.Provider value={{PropertyDetailShowOrNot, setPropertyDetailShowOrNot, currentPage,setcurrentPage, a,check ,PropertyFormShowOrNot, setPropertyFormShowOrNot}}>
       {children}
     </DashboardContext.Provider>
   );

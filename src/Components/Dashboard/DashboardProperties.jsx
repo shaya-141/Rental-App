@@ -4,16 +4,16 @@ import AddProperty from './AddProperty'
 import { useAuthContext } from '../../Context/Auth'
 import { useFilesContext } from '../../Context/GetUserFilesFromFirebase'
 
+
 function DashboardProperties() {
 
   const {User,isLoggedin} = useAuthContext()
-  console.log(isLoggedin);
-  const {propertiesArray} = useFilesContext()
+  const {properties} = useFilesContext()
   const [Properties, setProperties] = useState([])
   useEffect(()=>{
-    setProperties(propertiesArray)
+    setProperties(properties)
 
-    console.log("UserId from files", propertiesArray);
+    console.log("UserId from files", properties);
   },[])
 
   
@@ -21,7 +21,8 @@ function DashboardProperties() {
 
   return (
     <div className='h-[100%] w-full  p-3'>
-      
+
+
 
         <h1 className='text-[18px] font-medium text-gray-900'>
 
@@ -39,7 +40,7 @@ function DashboardProperties() {
           </h1>
 
             <section className='mt-6'>
-                 <PropertyTable Properties={propertiesArray}></PropertyTable>
+                 <PropertyTable Properties={properties}></PropertyTable>
             </section>
     </div>
   )

@@ -3,6 +3,7 @@ import { useAuthContext } from "./Auth";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { ref } from "firebase/storage";
+import Properties from "../pages/Properties";
 
 
 const FilesContext = createContext()
@@ -12,30 +13,31 @@ export const FilesProvider = ({ children }) => {
     const { UserId, User } = useAuthContext()
     const [properties, setProperties] = useState([])
     let propertiesArray = []
-    // let UserId =1 
-
+  
 
     const fetchPropertyById = async (Id) => {
         try {
 
             const propertyRef = collection(db, `properties/${UserId}/myproperties`)
             const snapShot = await getDocs(propertyRef)
+
             
             if (snapShot) {
+                
                 snapShot.forEach((docSnapShot)=>{
                     const data = docSnapShot.data()
-                    // setPropertiesArray(propertiesArray.push(data))
+                    
                     propertiesArray.push(data)
-                    console.log(propertiesArray);
+                    setProperties(propertiesArray)
+                    // console.log(propertiesArray);
                     
                     
                     
                     
                     
                 })
-                // setProperties(propertiesArray)
-                // console.log('properties array', properties);
-                return
+                
+                return properties
 
             }
             else {
@@ -52,15 +54,15 @@ export const FilesProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        console.log('shayan');
-        console.log(UserId);
+        // console.log('shayan');
+        // console.log(UserId);
         fetchPropertyById(UserId)
 
 
-    })
+    },[UserId])
 
     return (
-        <FilesContext.Provider value={{propertiesArray}}>
+        <FilesContext.Provider value={{properties}}>
             {children}
         </FilesContext.Provider>
     )

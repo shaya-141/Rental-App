@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import edit from '../../assets/icons/edit.png'
 import eye from '../../assets/icons/eye.png'
+import { useDashboardContext } from '../../Context/ActiveDashboardPage'
+import { useFilesContext } from '../../Context/GetUserFilesFromFirebase'
 function PropertyTable({ Properties }) {
-    const [prop, setprop] = useState([])
+    
+    const {properties} = useFilesContext()
 
     useEffect(() => {
-        setprop(Properties)
-        console.log('PropertyTable', Properties);
+        
+        console.log('PropertyTable', properties);
 
-    }, [Properties])
+    }, [])
+
+    const handleDetailOfPropertise = ()=>{
+        console.log('shayan');
+        setPropertyDetailShowOrNot(true)
+        
+    }
 
     return (
-
+        <>
+        
+       
 
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -43,7 +54,7 @@ function PropertyTable({ Properties }) {
                 </thead>
                 <tbody>
                     {
-                        prop.map((data, key) => {
+                        Properties.map((data, key) => {
                             return (
                                 <tr key={key} class="bg-white text-[#656e73] font-medium border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 text-[15px] font-semibold text-[#0b1D27] whitespace-nowrap dark:text-white">
@@ -67,7 +78,7 @@ function PropertyTable({ Properties }) {
                                         "PAID"
                                         }
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4" onClick={handleDetailOfPropertise}>
                                         <img src={eye} className='h-4 cursor-pointer' alt="" />
                                     </td>
                                     <td class="px-6 py-4">
@@ -83,7 +94,7 @@ function PropertyTable({ Properties }) {
                 </tbody>
             </table>
         </div>
-
+        </>
 
     )
 }

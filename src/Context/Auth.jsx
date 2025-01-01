@@ -25,7 +25,7 @@ export const AuthProvider = ({children}) =>{
                 setIsLoggedin(true)
                 setUser(data.data())
                 console.log("user id",uid);
-                console.log("getdata",User);
+                // console.log("getdata",User);
                 
                 
                 // ...

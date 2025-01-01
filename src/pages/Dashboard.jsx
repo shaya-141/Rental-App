@@ -19,13 +19,14 @@ function Dashboard() {
 
     // console.log('currentPage',currentPage);
     // console.log('chcek',check);
-    console.log(User);
+    // console.log(User);
     
 
 
 
     return (
         <>
+        
             <AdddpropertyForm></AdddpropertyForm>
             <div className='h-screen  overflow-hidden flex  p-4 ' >
                 <DashboardSidebar></DashboardSidebar>
