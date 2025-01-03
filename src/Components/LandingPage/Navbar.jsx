@@ -30,7 +30,7 @@ function Navbar() {
   }
 
   return (
-    <div className='w-full  h-[80px]  p-9 flex items-center justify-between '>
+    <div id='navbar' className='w-full  h-[80px]  p-9 flex items-center justify-between '>
       <Link to={'/ '}>
         <div id='logotext' className='flex items-center  gap-2'>
           <img src={homelogo} alt="" className='h-6 mb-[2px]' />

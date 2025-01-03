@@ -24,7 +24,7 @@ export const AuthProvider = ({children}) =>{
                 const data = await getDoc(docref)
                 setIsLoggedin(true)
                 setUser(data.data())
-                console.log("user id",uid);
+                // console.log("user id",uid);
                 // console.log("getdata",User);
                 
                 

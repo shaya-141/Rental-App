@@ -16,6 +16,7 @@ import Protection from './Components/ProtectionRoute/Protection'
 import { FilesProvider } from './Context/GetUserFilesFromFirebase'
 import Properties from './pages/Properties'
 import { AllPropertiesProvider } from './Context/GetAllPropertise'
+import PropertiesDetail from './pages/PropertiesDetail'
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                 <Route path='/signup' element={<Signup></Signup>}></Route>
                 <Route path='/dashboard' element={<Dashboard></Dashboard>}> </Route>
                 <Route path='/propertise' element={<Properties></Properties>}></Route>
+                <Route path='/propertise/:id' element={<PropertiesDetail></PropertiesDetail>}></Route>
                 {/* <Route path='/profile' element={<Profile></Profile>}></Route> */}
 
               </Routes>
