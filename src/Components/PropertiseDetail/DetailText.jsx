@@ -8,6 +8,7 @@ function DetailText({ data }) {
                 <h1 className='text-[22px] font-semibold'>{data?.propertyName}</h1>
                 {/* <h1 className='text-[20px] font-semibold'>{data?.rent} <span>pkr</span></h1> */}
             </div>
+            <h1  className='text-[20px] font-semibold mt-6'>Location</h1>
             <div className='flex items-center mt-6 gap-2'>  
                 <img src={locate} alt="" className='h-6 mb-1' />
                 <h1 className='text-[18px] font-semibold text-[#656e73]'>{data?.address}</h1>
@@ -15,7 +16,7 @@ function DetailText({ data }) {
             {/* property details  */}
 
                 <h1  className='text-[20px] font-semibold mt-6'>Details</h1>
-            <div className="flex  max-w-[700px] min-h-[100px] mt-6 ">
+            <div className="flex  max-w-[700px] min-h-[80px] mt-6 ">
                 <div className="flex flex-col w-1/2">
                     <div className="flex items-center gap-3">
                         <h1 className="text-[18px] font-semibold w-[40%]">Type:</h1>
@@ -40,6 +41,15 @@ function DetailText({ data }) {
                 </div>
             </div>
 
+
+
+
+            <div className='max-w-[700px]'>
+
+
+            <h1  className='text-[20px] font-semibold mt-3'>Overview</h1>
+            <p className='text-[#656e73] font-semibold mt-5'>{data?.overview}</p>
+            </div>
 
            
 

@@ -5,6 +5,7 @@ import { db } from '../utils/firebase';
 import Navbar from '../Components/LandingPage/Navbar';
 import Detailimage from '../Components/PropertiseDetail/Detailimage';
 import DetailText from '../Components/PropertiseDetail/DetailText';
+import OwnerDetail from '../Components/PropertiseDetail/OwnerDetail';
 
 function PropertiesDetail() {
 
@@ -40,8 +41,9 @@ function PropertiesDetail() {
   return (
     <>
         <Navbar></Navbar>
-        <div className='w-full  px-9 mt-4'>
+        <div className='w-full flex justify-between  px-9 mt-4'>
             <Detailimage data={currentProperties}></Detailimage>
+            <OwnerDetail></OwnerDetail>
         </div>
         <DetailText data={currentProperties}></DetailText>
     
