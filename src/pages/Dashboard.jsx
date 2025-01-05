@@ -41,7 +41,7 @@ function Dashboard() {
                         ) : currentPage === 'notifications' ? (
                             <DashboardNotifications />
                         ) : currentPage === 'settings' ? (
-                            <DashboardSettings />
+                            <DashboardSettings data={User} />
                         ) : null
                     }
 

@@ -3,6 +3,7 @@ import edit from '../../assets/icons/edit.png'
 import eye from '../../assets/icons/eye.png'
 import { useDashboardContext } from '../../Context/ActiveDashboardPage'
 import { useFilesContext } from '../../Context/GetUserFilesFromFirebase'
+import { Link } from 'react-router-dom'
 function PropertyTable({ Properties }) {
     
     const {properties} = useFilesContext()
@@ -73,14 +74,16 @@ function PropertyTable({ Properties }) {
                                         {
                                             data.tenantId === 'none'
                                             ?
-                                            'N/A'
+                                            'Pending'
                                             :
-                                        "PAID"
+                                        "Active"
                                         }
                                     </td>
+                                   
                                     <td class="px-6 py-4" onClick={handleDetailOfPropertise}>
                                         <img src={eye} className='h-4 cursor-pointer' alt="" />
                                     </td>
+                                   
                                     <td class="px-6 py-4">
                                         <img src={edit} className='h-4 cursor-pointer' alt="" />
                                     </td>

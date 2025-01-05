@@ -1,6 +1,7 @@
 import React from 'react'
 // import banner from '../assets/banner/hero2.png'
 import arrow from '../../assets/icons/right-up.png'
+import { Link } from 'react-router-dom'
 
 function HomeHero2() {
   return (
@@ -12,7 +13,9 @@ function HomeHero2() {
                       {/* <h1 className='text-[52px] font-semibold text-white'>Dream Home</h1> */}
                       <p className='text-white text-[16px]'>Find your perfect space, hassle-free! Whether you are a <br /> landlord or tenant,our app makes renting simple, secure, <br /> and seamless</p>
 
+                    <Link to={'/propertise'}>
                       <button className='bg-white text-[#0b1D27] flex justify-center gap-2  items-center w-[140px] mt-4  py-3 rounded-3xl'>Explore <img src={arrow} className='h-6' alt="" /></button>
+                    </Link>
 
 
                     </div>

@@ -5,7 +5,7 @@ import { app, auth, db } from '../utils/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { toast } from 'sonner';
-import { Loader } from 'rsuite';
+
 function SignupForm() {
 
     const [email, setEmail] = useState('')

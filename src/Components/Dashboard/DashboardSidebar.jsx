@@ -10,11 +10,12 @@ import bell from '../../assets/icons/bell.png'
 import bellblack from '../../assets/icons/bellblack.png'
 import logout from '../../assets/icons/logoutwhite.png'
 import { useDashboardContext } from '../../Context/ActiveDashboardPage'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
 import { toast } from 'sonner'
 
 function DashboardSidebar() {
+    const Navigate = useNavigate()
     const { currentPage, setcurrentPage, check, a } = useDashboardContext()
     const handleDashboard = (e) => {
         setcurrentPage(e)
@@ -29,6 +30,8 @@ function DashboardSidebar() {
         signOut(auth).then(() => {
             // Sign-out successful.
             toast.success('logout successfully')
+            Navigate('/')
+
 
         }).catch((error) => {
             console.log('error while logout',error);

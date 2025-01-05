@@ -44,6 +44,7 @@ function App() {
                 <Route path='/dashboard' element={<Dashboard></Dashboard>}> </Route>
                 <Route path='/propertise' element={<Properties></Properties>}></Route>
                 <Route path='/propertise/:id' element={<PropertiesDetail></PropertiesDetail>}></Route>
+                <Route path='/dashboard/:id' element={<PropertiesDetail></PropertiesDetail>}></Route>
                 {/* <Route path='/profile' element={<Profile></Profile>}></Route> */}
 
               </Routes>
