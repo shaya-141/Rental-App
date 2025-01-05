@@ -34,4 +34,4 @@ Before you start, ensure that the following are installed on your local machine:
 
 1. Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/gharana.git
+   git clone https://github.com/shaya-141/gharana.git
