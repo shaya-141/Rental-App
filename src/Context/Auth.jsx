@@ -1,51 +1,59 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Children, useContext, useEffect, useState } from "react";
-import { createContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
+const AuthContext = createContext();
 
-const AuthContext =  createContext()
+export const AuthProvider = ({ children }) => {
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [User, setUser] = useState(null);
+  const [UserId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true); // New loading state
 
-export const AuthProvider = ({children}) =>{
-        const [isLoggedin, setIsLoggedin] = useState(false)
-        const [User, setUser] = useState(null)
-        const [UserId, setUserId] = useState(null)
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setLoading(true); // Start loading
+      if (firebaseUser) {
+        try {
+          const uid = firebaseUser.uid;
+          setUserId(uid);
 
-        useEffect(()=>{
-            const auth = getAuth();
-            onAuthStateChanged(auth, async (user) => {
-              if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/auth.user
-                const uid = user.uid;
-                setUserId(uid)
-                const docref = doc(db,"Users",uid)
-                const data = await getDoc(docref)
-                setIsLoggedin(true)
-                setUser(data.data())
-                // console.log("user id",uid);
-                // console.log("getdata",User);
-                
-                
-                // ...
-              } else {
-                // User is signed out
-                // ...
-              }
-            });
-        },[])
+          // Fetch user data from Firestore
+          const docRef = doc(db, "Users", uid);
+          const docSnap = await getDoc(docRef);
 
+          if (docSnap.exists()) {
+            setUser(docSnap.data());
+            setIsLoggedin(true);
+          } else {
+            console.error("No user data found in Firestore.");
+            setUser(null);
+            setIsLoggedin(false);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setIsLoggedin(false);
+          setUser(null);
+        }
+      } else {
+        // User is signed out
+        setIsLoggedin(false);
+        setUser(null);
+        setUserId(null);
+      }
+      setLoading(false); // End loading
+    });
 
-        return(
-            <AuthContext.Provider value={{isLoggedin,User,UserId}}>
-                {children}
-            </AuthContext.Provider>
-        )
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
 
+  return (
+    <AuthContext.Provider value={{ isLoggedin, User, UserId, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-}
-
-export const useAuthContext = ()=>{
-    return useContext(AuthContext)
-}
+export const useAuthContext = () => useContext(AuthContext);

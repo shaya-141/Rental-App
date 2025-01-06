@@ -17,12 +17,14 @@ export const FilesProvider = ({ children }) => {
 
     const fetchPropertyById = async (Id) => {
         try {
-
-            const propertyRef = collection(db, `properties/${UserId}/myproperties`)
-            const snapShot = await getDocs(propertyRef)
-
-            
-            if (snapShot) {
+            if (User?.Role === 'landlord') {
+                
+                
+                const propertyRef = collection(db, `properties/${UserId}/myproperties`)
+                const snapShot = await getDocs(propertyRef)
+                
+                
+                if (snapShot) {
                 
                 snapShot.forEach((docSnapShot)=>{
                     const data = docSnapShot.data()
@@ -38,6 +40,11 @@ export const FilesProvider = ({ children }) => {
                 })
                 
                 return properties
+            }
+            else{
+                console.log('user is tenant');
+                return null
+            }
 
             }
             else {
@@ -56,6 +63,7 @@ export const FilesProvider = ({ children }) => {
     useEffect(() => {
         // console.log('shayan');
         // console.log(UserId);
+        
         fetchPropertyById(UserId)
 
 

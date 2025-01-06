@@ -4,7 +4,7 @@ import eye from '../../assets/icons/eye.png'
 import { useDashboardContext } from '../../Context/ActiveDashboardPage'
 import { useFilesContext } from '../../Context/GetUserFilesFromFirebase'
 import { Link } from 'react-router-dom'
-function PropertyTable({ Properties,display }) {
+function OwnersTable({ Properties }) {
     
     const {properties} = useFilesContext()
 
@@ -14,9 +14,9 @@ function PropertyTable({ Properties,display }) {
 
     }, [])
 
-    const handleDetailOfPropertise = ()=>{
+    const handleDetailOfOwner = ()=>{
         console.log('shayan');
-        setPropertyDetailShowOrNot(true)
+        setOwnerDetailShowOrNot(true)
         
     }
 
@@ -26,7 +26,7 @@ function PropertyTable({ Properties,display }) {
        
 
 
-        <div class={`relative ${display} overflow-x-auto shadow-md sm:rounded-lg`}>
+        <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-[#656e73]  uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -37,7 +37,7 @@ function PropertyTable({ Properties,display }) {
                             Address
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Tenant
+                            Owner
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Rent
@@ -102,4 +102,4 @@ function PropertyTable({ Properties,display }) {
     )
 }
 
-export default PropertyTable
+export default OwnersTable

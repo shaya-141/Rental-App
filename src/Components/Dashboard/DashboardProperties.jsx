@@ -57,17 +57,11 @@ function DashboardProperties() {
   return (
     <div className="h-[100%] w-full p-3">
       <h1 className="text-[18px] font-medium text-gray-900">
-        {isLoggedin ? (
-          User.Role === 'landlord' ? (
-            <AddProperty />
-          ) : (
-            'My Rented Properties'
-          )
-        ) : null}
+       <AddProperty></AddProperty>
       </h1>
 
       <section className="mt-6">
-        <PropertyTable Properties={User?.Role === 'landlord' ? properties : RentProperties} />
+        <PropertyTable display={'block'} Properties={User?.Role === 'landlord' ? properties : RentProperties} />
       </section>
     </div>
   );

@@ -1,56 +1,43 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../utils/firebase";
-import Properties from "../pages/Properties";
 
 const AllPropertiesContext = createContext();
 
 export const AllPropertiesProvider = ({ children }) => {
     const [allProperties, setAllProperties] = useState([]);
-   
+    const [loading, setLoading] = useState(true);
+
+    // Function to fetch properties once (non-real-time)
     const fetchProperties = async () => {
+        setLoading(true); // Start loading
         try {
-            const propertyRef = collection(db, `AllProperties`);
-            // const snapshot = await getDocs(propertyRef);
-            const unsub = onSnapshot(propertyRef, (snapshot) => {
-                
-                // console.log("snapshot", snapshot);
+            const propertyRef = collection(db, "AllProperties");
+            const snapshot = await getDocs(propertyRef);
 
-                if (!snapshot.empty) {
-                    const propertiesArray = snapshot.docs.map((docSnap) => ({
-                        id: docSnap.id,
-                        ...docSnap.data(),
-                    }));
-                    setAllProperties(propertiesArray); // Properly update the state
-                    // console.log("allProperties", propertiesArray);
-
-                } else {
-                    console.log("No properties found!");
-                }
-            })
-
-            // setAllProperties(properties)
-
-            // console.log("snapshot",snapshot);
-
-
-
+            if (!snapshot.empty) {
+                const propertiesArray = snapshot.docs.map((docSnap) => ({
+                    id: docSnap.id,
+                    ...docSnap.data(),
+                }));
+                setAllProperties(propertiesArray);
+            } else {
+                console.log("No properties found!");
+            }
         } catch (error) {
             console.error("Error while fetching properties:", error);
+        } finally {
+            setLoading(false); // End loading
         }
     };
 
-
-
-
+    // Call fetchProperties once when the component mounts
     useEffect(() => {
-
         fetchProperties();
-
-    }, []); // Add an empty dependency array to run only on component mount
+    }, []); // Empty dependency array ensures this runs only once
 
     return (
-        <AllPropertiesContext.Provider value={{ allProperties }}>
+        <AllPropertiesContext.Provider value={{ allProperties, loading }}>
             {children}
         </AllPropertiesContext.Provider>
     );

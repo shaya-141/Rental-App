@@ -13,6 +13,7 @@ function Navbar() {
   const { isLoggedin, User } = useAuthContext();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -27,6 +28,9 @@ function Navbar() {
         console.log('An error happened', error);
       });
   };
+
+  console.log("isLoggedin",isLoggedin);
+  
 
   return (
     <>
