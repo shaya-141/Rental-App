@@ -70,7 +70,7 @@ function PropertyTable({ Properties,display }) {
                                     <td class="px-6 py-4">
                                         {data.rent}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-[#0b1D27] font-semibold">
                                         {
                                             data.tenantId === 'none'
                                             ?

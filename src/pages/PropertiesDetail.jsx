@@ -1,4 +1,4 @@
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../utils/firebase';
@@ -19,26 +19,24 @@ function PropertiesDetail() {
 
     if (docSnap.exists()) {
       setCurrentProperties(docSnap.data());
+      setOwnerId(docSnap.data().OwnerId)
       console.log(docSnap.data());
     } else {
       console.log('Document not found');
     }
   };
+ const getCurrentPropertyOwner = async (ownerId) => {
+    console.log('Owner id', ownerId);
 
-  const getCurrentPropertyOwner = async (ownerId) => {
-    console.log("OwnerId",OwnerId);
-    setOwnerId(currentProperties?.OwnerId)
+    const userRef = doc(db, 'Users', ownerId);
+    const docSnap = await getDoc(userRef);
+    console.log(docSnap.data());
+    setOwnerDetailDoc(docSnap.data());
     
-    if (!ownerId) return; // Avoid fetching if ownerId is not available
-    const docRef = doc(db, 'Users', ownerId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setOwnerDetailDoc(docSnap.data());
-      console.log('OwnerDetail', docSnap.data());
-    } else {
-      console.log('Owner document not found');
-    }
+    
   };
+ 
+  
 
   // Fetch property details when the component mounts or when `id` changes
   useEffect(() => {
@@ -46,14 +44,17 @@ function PropertiesDetail() {
     console.log('property id ',id);
     
   }, [id]);
-
-  // Fetch owner details when `currentProperties` updates
-  useEffect(() => {
-    if (currentProperties?.OwnerId) {
+   useEffect(() => {
       
-      getCurrentPropertyOwner(currentProperties.OwnerId);
-    }
-  }, [currentProperties]);
+      
+      // Fetch owner details when `currentProperties` updates
+        if (OwnerId) {
+          
+          getCurrentPropertyOwner(OwnerId);
+        }
+      }, [OwnerId]);
+
+ 
 
   return (
     <>

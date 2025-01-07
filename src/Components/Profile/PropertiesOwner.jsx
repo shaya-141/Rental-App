@@ -8,6 +8,8 @@ function OwnersTable({ Properties }) {
     
     const {properties} = useFilesContext()
 
+    
+
     useEffect(() => {
         
         console.log('PropertyTable', properties);

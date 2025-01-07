@@ -89,7 +89,7 @@ function SignupForm() {
             <button className='w-full h-11 rounded bg-[#0b1D27] text-white mt-5 ' onClick={createAccount} >
                 {
                     loading?
-                    <Loader content="loading..." />
+                    <LoaderComponent size={16} color="#ffffff" />
                     :
                     'Signup'
                 }

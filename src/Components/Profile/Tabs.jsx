@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuthContext } from '../../Context/Auth'
 import ProfileUser from './ProfileUser'
 import PropertiesOwner from './PropertiesOwner'
 import PropertyTable from '../Dashboard/PropertyTable'
 
 import { useState } from 'react'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../../utils/firebase'
 function Tabs() {
-    const{User} = useAuthContext()
+    const{User,UserId} = useAuthContext()
     const [whichDisplayShow, setWhichDisplayShow] = useState('profile')
     const [data, setdata] = useState([])
-
+     const [RentProperties, setRentProperties] = useState([]);
     function handleDsipaly(value){
         setWhichDisplayShow(value)
         console.log(User);
         
     }
+   
     // function handleDsipaly2(value){
     //     setWhichDisplayShow(value)
     // }
@@ -39,7 +42,7 @@ function Tabs() {
 
             <ProfileUser data={User} display={whichDisplayShow == 'profile'? 'block': 'hidden'}></ProfileUser>
             
-            <PropertyTable data={data} display={whichDisplayShow == 'rented'? 'block': 'hidden'}></PropertyTable>
+            <PropertyTable Properties={RentProperties} display={whichDisplayShow == 'rented'? 'block': 'hidden'}></PropertyTable>
             {/* <PropertiesOwner></PropertiesOwner> */}
 
 

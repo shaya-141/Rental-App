@@ -66,8 +66,11 @@ export const FilesProvider = ({ children }) => {
         
         fetchPropertyById(UserId)
 
+        console.log('properties',properties);
+        
 
-    },[UserId])
+
+    },[UserId, User])
 
     return (
         <FilesContext.Provider value={{properties}}>

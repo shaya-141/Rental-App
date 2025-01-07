@@ -11,6 +11,8 @@ function OwnerDetail({ data, OwnerId, propertyId }) {
   const [loading, setLoading] = useState(false);
   const [isRequestSent, setIsRequestSent] = useState(false);
 
+ 
+
   // Add notification to Firestore
   const addNotification = async (notification) => {
     try {
@@ -65,6 +67,7 @@ function OwnerDetail({ data, OwnerId, propertyId }) {
 
     fetchNotificationStatus();
   }, [UserId, propertyId]);
+ 
 
   return (
     <div className="w-[35%] h-[400px] bg-[#fafafa] rounded p-4 px-6">

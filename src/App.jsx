@@ -25,44 +25,34 @@ function App() {
 
   return (
     <>
-
-      <BrowserRouter>
+ <BrowserRouter>
         <AuthProvider>
           <AllPropertiesProvider>
-
             <FilesProvider>
-
-
               <DashboardProvider>
-
-
-
                 <Toaster position="top-right" />
                 <Routes>
-                  <Route path='/' element={<Home></Home>}></Route>
-                  <Route path='/login' element={<Login></Login>}></Route>
-                  <Route path='/signup' element={<Signup></Signup>}></Route>
-                  {/* <Route
+                  <Route path='/' element={<Home />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/signup' element={<Signup />} />
+{/*                   
+                  Use DashboardMiddleware only for routes that require authentication
+                  <Route
                     path="/*"
                     element={
                       <DashboardMiddleware>
-                        <Routes>
-                          <Route path="dashboard" element={<Dashboard />} />
-                          <Route path="profile" element={<Profile />} />
-                        </Routes>
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="profile" element={<Profile />} />
                       </DashboardMiddleware>
                     }
                   /> */}
-                  <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
-                  <Route path='/profile' element={<Profile></Profile>}></Route>
-
-                  <Route path='/propertise' element={<Properties></Properties>}></Route>
-                  <Route path='/propertise/:id' element={<PropertiesDetail></PropertiesDetail>}></Route>
-                  <Route path='/dashboard/:id' element={<PropertiesDetail></PropertiesDetail>}></Route>
-
+                  
+                  {/* <Route path='/profile' element={<Profile />} /> */}
+                  <Route path='/dashboard' element={<Dashboard />} />
+                  <Route path='/propertise' element={<Properties />} />
+                  <Route path='/propertise/:id' element={<PropertiesDetail />} />
+                  <Route path='/dashboard/:id' element={<PropertiesDetail />} />
                 </Routes>
-
-
               </DashboardProvider>
             </FilesProvider>
           </AllPropertiesProvider>
