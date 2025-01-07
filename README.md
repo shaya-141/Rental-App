@@ -8,6 +8,8 @@
 - **Tenant Dashboard**: Create and manage your Dashboard to save preferred properties, track rental history, and book new spaces.
 - **Owner Dashboard**: Property owners can seamlessly list their properties, set pricing, and manage rental agreements.
 - **Advanced Search Filters**: Find properties based on specific criteria such as location, price range, and amenities.
+- **Search & Filters**: Find rental properties based on various filters like location, price range, and property type.
+- **Firebase Authentication**: Secure user registration and login powered by Firebase Authentication.
 
 
 
@@ -35,3 +37,15 @@ Before you start, ensure that the following are installed on your local machine:
 1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/shaya-141/gharana.git
+
+##Contributing
+**Contributions are welcome!** If you want to improve the project or add new features, feel free to fork the repo and submit a pull request.
+
+-Steps to contribute:
+-Fork the repository.
+-Create a new branch (git checkout -b feature-name).
+-Make your changes and commit them (git commit -am 'Add new feature').
+-Push your branch (git push origin feature-name).
+-Create a new pull request.
+
+   
