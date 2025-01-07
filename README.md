@@ -48,8 +48,8 @@ Contributions are welcome! If you want to improve the project or add new feature
 2. Create a new branch:
    ```bash
    git checkout -b feature-name
-3.Make your changes and commit them:
-4.Push your branch:
+3.Make your changes and commit them.
+4.Push your branch.
 5.Create a new pull request.
 
 
