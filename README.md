@@ -38,14 +38,21 @@ Before you start, ensure that the following are installed on your local machine:
    ```bash
    git clone https://github.com/shaya-141/gharana.git
 
-##Contributing
-**Contributions are welcome!** If you want to improve the project or add new features, feel free to fork the repo and submit a pull request.
+## Contributing
 
--Steps to contribute:
--Fork the repository.
--Create a new branch (git checkout -b feature-name).
--Make your changes and commit them (git commit -am 'Add new feature').
--Push your branch (git push origin feature-name).
--Create a new pull request.
+Contributions are welcome! If you want to improve the project or add new features, feel free to fork the repo and submit a pull request.
+
+### Steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+3.Make your changes and commit them:
+4.Push your branch:
+5.Create a new pull request.
+
+
+
 
    
