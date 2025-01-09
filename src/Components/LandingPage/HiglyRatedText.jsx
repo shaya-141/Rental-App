@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function HiglyRatedText() {
+function HiglyRatedText({fun}) {
   const [activeButton, setActiveButton] = useState(1);
 
   const handleButtonClick = (buttonId) => {
@@ -16,31 +16,31 @@ function HiglyRatedText() {
       </div>
 
       <div className="mt-10  flex items-center justify-center gap-6">
-        <button
+        <button 
           className={`w-[120px] h-10 rounded-3xl text-[14px] font-medium ${
             activeButton === 1 ? 'bg-[#0b1D27] text-white' : ' border border-[#0b1D27] text-[#0b1D27] '
             
           }`}
-          onClick={() => handleButtonClick(1)}
+          onClick={() => {handleButtonClick(1); fun('house')}}
         >
-          Featured
+          House
         </button>
         <button
           className={`w-[120px] h-10 rounded-3xl text-[14px] font-medium ${
             activeButton === 2 ? 'bg-[#0b1D27] text-white' : ' border border-[#0b1D27] text-[#0b1D27]'
           }`}
-          onClick={() => handleButtonClick(2)}
+          onClick={() => {handleButtonClick(2); fun('apartment')}}
         >
-          Popular
+          Apartment
         </button>
-        <button
+        {/* <button
           className={`w-[120px] h-10 rounded-3xl text-[14px] font-medium ${
             activeButton === 3 ? 'bg-[#0b1D27] text-white' : ' border border-[#0b1D27] text-[#0b1D27]'
           }`}
           onClick={() => handleButtonClick(3)}
         >
           Newest
-        </button>
+        </button> */}
       </div>
     </>
   );

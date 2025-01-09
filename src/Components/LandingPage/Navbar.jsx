@@ -47,22 +47,26 @@ function Navbar() {
           <Link to={'/'}>
             <span className="text-[16px] cursor-pointer text-[#0b1D27] font-semibold">Home</span>
           </Link>
+          <Link to={'/aboutus'}>
           <span className="text-[16px] cursor-pointer font-semibold text-[#656e73]">
             About us
           </span>
+          </Link>
           <Link to={'/propertise'}>
             <span className="text-[16px] cursor-pointer font-semibold text-[#656e73]">
               Properties
             </span>
           </Link>
+          <Link to={'/blog'}>
           <span className="text-[16px] cursor-pointer font-semibold text-[#656e73]">Blogs</span>
+          </Link>
         </div>
 
         <div>
           {isLoggedin ? (
             <Link to={'/dashboard'}>
-              <div className="w-[45px] h-[45px] rounded-3xl bg-red-400">
-                <img src={User?.img ? User?.img : avatar} alt="" className="w-full h-full" />
+              <div className="w-[45px] h-[45px] rounded-3xl border">
+              <img src={User?.img ? User?.img : avatar} alt="" className="w-full  h-full rounded-3xl" />
               </div>
             </Link>
           ) : (
@@ -90,9 +94,9 @@ function Navbar() {
 
         <div>
           {isLoggedin ? (
-            <Link to={'/dashboard'}>
+            <Link to={'/dashboard'} >
               <div className="w-[45px] h-[45px] rounded-3xl bg-red-400">
-                <img src={User?.img ? User?.img : avatar} alt="" className="w-full h-full" />
+                <img src={User?.img ? User?.img : avatar} alt="" className="w-full  h-full rounded-3xl" />
               </div>
             </Link>
           ) : (
@@ -115,9 +119,9 @@ function Navbar() {
           <h2 className="text-lg font-semibold mb-4">Menu</h2>
           <nav className="flex flex-col mt-6">
             <Link to="/" className="mb-2 text-lg font-medium">Home</Link>
-            <Link to="/about" className="mb-2 text-lg font-medium">About</Link>
+            <Link to="/aboutus" className="mb-2 text-lg font-medium">About</Link>
             <Link to="/contact" className="mb-2 text-lg font-medium">Contact</Link>
-            <Link to="/dashboard" className="mb-2 text-lg font-medium">Dashboard</Link>
+            <Link to="/blog" className="mb-2 text-lg font-medium">Blogs</Link>
           </nav>
         </div>
       </div>

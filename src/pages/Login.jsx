@@ -5,11 +5,13 @@ import { Link, redirect, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { auth } from '../utils/firebase'
 import LoaderComponent from '../Components/loader'
+import { useAuthContext } from '../Context/Auth'
 
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const{isLoggedin,setisLoggedin} = useAuthContext()
 
     const navigate = useNavigate()
 
@@ -23,7 +25,7 @@ function Login() {
                 toast.success('Login Successfully')
                 navigate('/')
                 console.log("user=>", user);
-
+                setisLoggedin(true)
                 // ...
             })
             .catch((error) => {

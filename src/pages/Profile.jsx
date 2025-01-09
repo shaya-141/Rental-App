@@ -2,17 +2,18 @@ import React from 'react'
 import Navbar from '../Components/LandingPage/Navbar'
 import DashboardSidebar from '../Components/Dashboard/DashboardSidebar'
 import Tabs from '../Components/Profile/Tabs'
+import ProfileDp from '../Components/Profile/ProfileDp'
 
 function Profile() {
+
+    
+
     return (
         <>
             <Navbar></Navbar>
             <div className='p-8'>
 
-                <div className='w-full '>
-                    <div className='w-[160px] h-[160px] bg-blue-400 rounded-full'>
-                    </div>
-                </div>
+                 <ProfileDp></ProfileDp>
 
                 <Tabs></Tabs>
            

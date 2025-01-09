@@ -34,6 +34,8 @@ export const AllPropertiesProvider = ({ children }) => {
     // Call fetchProperties once when the component mounts
     useEffect(() => {
         fetchProperties();
+        console.log("Fetching properties...",allProperties);
+        
     }, []); // Empty dependency array ensures this runs only once
 
     return (

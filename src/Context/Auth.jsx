@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setLoading(true); // Start loading
       if (firebaseUser) {
         try {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedin, User, UserId, loading }}>
+    <AuthContext.Provider value={{ isLoggedin, User, UserId, loading,setIsLoggedin }}>
       {children}
     </AuthContext.Provider>
   );

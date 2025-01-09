@@ -49,6 +49,7 @@ body{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  z-index: 0;
  
 }
 #banner2{
@@ -71,7 +72,41 @@ body{
   color: #0b1D27 !important;
 }
 
+#aboutusimg{
+   background-image: url(./assets/banner/aboutus.jpg);
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
+}
 
+
+
+
+
+
+
+
+@media (max-width:520px) {
+  #HighLightCard{
+    width: 90%;
+  }
+
+}
+@media (max-width:550px) {
+  #banner2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #banner2child{
+    width: 340px;
+    height: 300px;
+    /* right: 10%; */
+    right: 5%;
+    
+  }
+
+}
 
 @media (max-width:700px) {
 
@@ -81,5 +116,44 @@ body{
   #Navbar2{
     display: flex;
   }
+ 
+}
+@media (max-width:720px) {
+  #HighlyRatedProperty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: aqua; */
+  }
 
 }
+@media (max-width:800px) {
+  #propertyPage{
+    justify-content: center;
+  }
+
+}
+@media (max-width:900px) {
+
+ #heroimg{
+  display: none;
+ }
+ #card1{
+  flex-wrap: wrap;
+ }
+ /* #HighlyRatedProperty{
+  justify-content: center;
+ } */
+}
+@media (max-width:1000px) {
+
+ 
+ #card1{
+  flex-wrap: wrap;
+ }
+ /* #HighlyRatedProperty{
+  justify-content: center;
+ } */
+}
+
+

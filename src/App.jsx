@@ -18,6 +18,8 @@ import Properties from './pages/Properties'
 import { AllPropertiesProvider } from './Context/GetAllPropertise'
 import PropertiesDetail from './pages/PropertiesDetail'
 import DashboardMiddleware from './Components/MiddleWare/DashboardMiddleWare'
+import Aboutus from './pages/Aboutus'
+import Blog from './pages/Blogs'
 
 
 function App() {
@@ -35,17 +37,8 @@ function App() {
                   <Route path='/' element={<Home />} />
                   <Route path='/login' element={<Login />} />
                   <Route path='/signup' element={<Signup />} />
-{/*                   
-                  Use DashboardMiddleware only for routes that require authentication
-                  <Route
-                    path="/*"
-                    element={
-                      <DashboardMiddleware>
-                        <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="profile" element={<Profile />} />
-                      </DashboardMiddleware>
-                    }
-                  /> */}
+                  <Route path='/aboutus' element={<Aboutus></Aboutus>}></Route>
+                  <Route path='/blog' element={<Blog></Blog>}></Route>
                   
                   {/* <Route path='/profile' element={<Profile />} /> */}
                   <Route path='/dashboard' element={<Dashboard />} />

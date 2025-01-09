@@ -61,7 +61,7 @@ function PropertiesDetail() {
       <Navbar />
       <div className="w-full flex justify-between px-9 mt-4">
         <Detailimage data={currentProperties} />
-        <OwnerDetail data={ownerDetailDoc} OwnerId ={OwnerId} propertyId={id} />
+        <OwnerDetail data={ownerDetailDoc} property={currentProperties} OwnerId ={OwnerId} propertyId={id} />
       </div>
       <DetailText data={currentProperties} />
     </>

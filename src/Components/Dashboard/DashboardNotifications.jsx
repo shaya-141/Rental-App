@@ -9,7 +9,7 @@ function DashboardNotifications() {
   const [Notifications, setNotifications] = useState([]);
 
 
-  const forOwnerNotifications = async () => {
+const forOwnerNotifications = async () => {
     try {
         console.log("forOwnerNotifications");
         
@@ -22,14 +22,7 @@ function DashboardNotifications() {
           ...doc.data(), // Spread document data
         }));
 
-        // Use Promise.all to fetch all properties concurrently
-        // const fetchedProperties = await Promise.all(
-        //   notifications.map(async (data) => {
-        //     const docRef = doc(db, 'AllProperties', data.propertyId);
-        //     const propertySnap = await getDoc(docRef);
-        //     return propertySnap.exists() ? propertySnap.data() : null; // Return null if property doesn't exist
-        //   })
-        // );
+      
 
         console.log("notifications",notifications);
         setNotifications(notifications)

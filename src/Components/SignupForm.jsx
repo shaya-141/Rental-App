@@ -1,18 +1,20 @@
 
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { app, auth, db } from '../utils/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { toast } from 'sonner';
+import LoaderComponent from './loader';
 
 function SignupForm() {
-
+    const Navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setusername] = useState('')
     const [Role, setRole] = useState('tenant')
     const [img, setimg] = useState('')
+    const [contact, setcontact] = useState('')
     const [loading, setLoading] = useState(false)
 
 
@@ -20,7 +22,7 @@ function SignupForm() {
     const createAccount = async () => {
 
         // console.log('shayan', { email, password, username, Role });
-        if (email === '' || password === "" || Role === '' || username === '') {
+        if (email === '' || password === "" || Role === '' || username === ''|| contact === '') {
             toast.error('please enter all field')
             return;
         }
@@ -30,7 +32,7 @@ function SignupForm() {
             const user = userCredentials.user;
 
             const userRef = doc(db, "Users", user.uid)
-            const userData = { username, email, password, Role, img }
+            const userData = { username, email, password, Role, img ,contact}
 
 
             await setDoc(userRef, userData)
@@ -39,7 +41,8 @@ function SignupForm() {
             console.log('user create successfully');
             
             console.log('user addded successfully');
-
+            
+            Navigate('/login')
             // console.log("user=>", user);
 
             
@@ -48,7 +51,7 @@ function SignupForm() {
         } catch (error) {
             console.log('error', error);
             toast.error(error.message)
-
+            setLoading(false)
         }
 
     }
@@ -72,6 +75,10 @@ function SignupForm() {
                 <div >
                     <p className='font-medium text-[#656e73]'>Password</p>
                     <input type="text" onChange={(e) => setPassword(e.target.value)} placeholder='Password' className='w-full h-12 p-3 rounded mt-1  border-gray-500 border' />
+                </div>
+                <div >
+                    <p className='font-medium text-[#656e73]'>Contact</p>
+                    <input type="text" onChange={(e) => setcontact(e.target.value)} placeholder='Password' className='w-full h-12 p-3 rounded mt-1  border-gray-500 border' />
                 </div>
                 <div>
 
