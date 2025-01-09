@@ -8,7 +8,7 @@ function Aboutus() {
     <Navbar></Navbar>
     <div className='w-full min-h-screen  p-8'>
         
-        <div id='aboutusimg' className='bg-yellow-200 w-full h-[400px] rounded-2xl'>
+        <div id='aboutusimg' className='bg-gray-200 w-full h-[400px] rounded-2xl'>
 
         </div>
         
