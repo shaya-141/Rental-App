@@ -72,8 +72,8 @@ function Navbar() {
               </div>
             </Link>
           ) : (
-              <Link className="flex items-center w-[90px] text-white justify-center gap-1" to={'/login'}>
-            <button className="text-[14px] font-medium h-[40px] gap-1 bg-[#0b1D27] text-white rounded-[24px] w-[90px]">
+            <Link className="flex items-center w-[90px] text-white justify-center " to={'/login'}>
+            <button className="text-[14px] flex items-center justify-center  font-medium h-[40px] gap-1 bg-[#0b1D27] text-white rounded-[24px] w-[90px]">
                 Login <img src={arrow} className="h-3" alt="" />
             </button>
               </Link>
