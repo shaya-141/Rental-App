@@ -24,7 +24,7 @@ const forOwnerNotifications = async () => {
 
       
 
-        console.log("notifications",notifications);
+        // console.log("notifications",notifications);
         setNotifications(notifications)
         
         

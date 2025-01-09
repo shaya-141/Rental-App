@@ -4,7 +4,7 @@ import { useAuthContext } from '../../Context/Auth';
 
 function DashboardTenant() {
    const {User,isLoggedin} = useAuthContext()
-    console.log(isLoggedin);
+    // console.log(isLoggedin);
   return (
     <div className='h-[100%] w-full  p-3'>
              <h1 className='text-[18px] font-medium text-gray-900'>

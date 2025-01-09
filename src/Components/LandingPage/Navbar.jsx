@@ -8,6 +8,7 @@ import avatar from '../../assets/icons/avatar.png';
  // Import rsuite styles
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthContext } from '../../Context/Auth';
+import { toast } from 'sonner';
 
 function Navbar() {
   const { isLoggedin, User } = useAuthContext();
@@ -25,6 +26,7 @@ function Navbar() {
         console.log('Sign-out successful');
       })
       .catch((error) => {
+        // toast.error(error)
         console.log('An error happened', error);
       });
   };

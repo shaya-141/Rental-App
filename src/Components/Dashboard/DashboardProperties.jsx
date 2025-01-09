@@ -14,12 +14,9 @@ function DashboardProperties() {
 
  
   useEffect(() => {
-    // Only fetch tenant properties when the role is 'tenant'
-   
-
-    // Set properties based on user role
+    
     setProperties(properties);
-    console.log('Properties from files', properties);
+    // console.log('Properties from files', properties);
     
 
   }, [User, properties, RentProperties]);

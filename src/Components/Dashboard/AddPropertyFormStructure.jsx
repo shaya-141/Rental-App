@@ -117,7 +117,7 @@ function AddPropertyFormStructure() {
             const docRef = await addDoc(propertiesCollection, dataToSave);
             const secounddocRef = await addDoc(AllPropertiesCollection, dataToSave);
 
-            console.log("Document written with ID: ", docRef.id);
+            // console.log("Document written with ID: ", docRef.id);
             toast.success("Property added successfully!");
             setLoading(false)
             setPropertyFormShowOrNot(false)

@@ -47,7 +47,7 @@ function DashboardSettings({ data }) {
     try {
       // Upload to Cloudinary
       const imageUrl = await uploadImageToCloudinary(selectedFile);
-      console.log("Uploaded Image URL:", imageUrl);
+      // console.log("Uploaded Image URL:", imageUrl);
 
       // Update Firestore document
       const userRef = doc(db, "Users", UserId);

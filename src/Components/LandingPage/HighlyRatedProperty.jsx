@@ -22,7 +22,7 @@ function HighlyRatedProperty() {
     const filter = allProperties.filter((item) => item.propertyType === which)
     setFilterProperty(filter)
 
-    console.log('Filtered Properties:', filter)
+    // console.log('Filtered Properties:', filter)
   }, [which, allProperties]) // Re-run the effect when 'which' changes
 
   useEffect(() => {
