@@ -1,186 +1,159 @@
+import React, { useEffect, useState } from "react";
 import {
-    collection,
-    doc,
-    getDoc,
-    getDocs,
-    query,
-    updateDoc,
-    where,
-  } from "firebase/firestore";
-  import React, { useEffect, useState } from "react";
-  import { db } from "../../utils/firebase";
-  import avatar from "../../assets/icons/avatar.png";
-  import Loadercomponent from "../loader";
-  
-  function NotificationsBar({ data }) {
-    const [requestDoc, setRequestDoc] = useState(null);
-    const [status, setStatus] = useState(null); // Tracks the current status (e.g., "Accepted", "Rejected")
-    const [requestProperty, setRequestProperty] = useState(null);
-    const [loading, setLoading] = useState(false);
-  
-    const getCurrentTenantRequest = async (tenantRequestId) => {
-      console.log("tenant id", tenantRequestId);
-  
-      const userRef = doc(db, "Users", tenantRequestId);
-      const docSnap = await getDoc(userRef);
-      console.log(docSnap.data());
-      setRequestDoc(docSnap.data());
-    };
-  
-    const updatePropertyTenant = async (propertyId, tenantRequestId) => {
-      try {
-        setLoading(true);
-        // Reference to the property document
-        const propertyRef = doc(db, "AllProperties", propertyId);
-  
-        // Fetch the property document
-        const propertySnap = await getDoc(propertyRef);
-  
-        if (propertySnap.exists()) {
-          // Log the current data of the property
-          const propertyData = propertySnap.data();
-          setRequestProperty(propertyData);
-          console.log("Current Property Data:", propertyData);
-  
-          // Update the tenant field
-          await updateDoc(propertyRef, {
-            tenantId: tenantRequestId,
-          });
-          updatePropertyForMyPropertiesCollection(propertyData?.propertyName);
-          console.log(
-            `Property ${propertyId} updated successfully with tenant ${tenantRequestId}`
-          );
-          setLoading(false);
-        } else {
-          console.error(`Property with ID ${propertyId} does not exist.`);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error updating property tenant:", error);
-        setLoading(false);
-      }
-    };
-  
-    const updatePropertyForMyPropertiesCollection = async (propertyName) => {
-      try {
-        // Reference to the collection
-        const propertyCollectionRef = collection(
-          db,
-          `properties/${data?.Ownerid
-          }/myproperties`
-        );
-  
-        // Query to find the document where "propertyName" matches
-        const propertyQuery = query(
-          propertyCollectionRef,
-          where("propertyName", "==", propertyName)
-        );
-        const querySnapshot = await getDocs(propertyQuery);
-  
-        if (!querySnapshot.empty) {
-          querySnapshot.forEach(async (docSnap) => {
-            // Get the document reference
-            const propertyDocRef = docSnap.ref;
-  
-            // Log the current data of the property
-            const propertyData = docSnap.data();
-            console.log("Current Property Data:", propertyData);
-  
-            // Update the tenant field
-            await updateDoc(propertyDocRef, {
-              tenantId: tenantRequestId,
-            });
-  
-            console.log(
-              `Property ${docSnap.id} updated successfully with tenant ${tenantRequestId}`
-            );
-          });
-        } else {
-          console.error(`No property found with the name "${propertyName}".`);
-        }
-      } catch (error) {
-        console.error("Error updating property tenant:", error);
-      }
-    };
-  
-    const handleAccept = () => {
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../utils/firebase";
+import avatar from "../../assets/icons/avatar.png";
+import Loadercomponent from "../loader";
+
+function NotificationsBar({ data }) {
+  const [requestDoc, setRequestDoc] = useState(null);
+  const [status, setStatus] = useState(null); // Tracks the current status
+  const [loadingId, setLoadingId] = useState(null); // Tracks which button is loading
+  const [isAssigned, setIsAssigned] = useState(false); // Tracks if a tenant is already assigned
+  const [PropertiesArray, setPropertiesArray] = useState([])
+  const getCurrentTenantRequest = async (tenantRequestId) => {
+    const userRef = doc(db, "Users", tenantRequestId);
+    const docSnap = await getDoc(userRef);
+    setRequestDoc(docSnap.data());
+  };
+
+  const checkPropertyAssignment = async (propertyId) => {
+    const propertyRef = doc(db, "AllProperties", propertyId);
+    const propertySnap = await getDoc(propertyRef);
+
+    if (propertySnap.exists()) {
+      const propertyData = propertySnap.data();
+      setPropertiesArray((prevArray) => [...prevArray, propertyData]);
+
+      console.log("Updated Properties Array:", PropertiesArray)
       
-      console.log(data?.propertyId, data?.tenantRequestId);
-  
-      updatePropertyTenant(data?.propertyId, data?.tenantRequestId);
-  
-      localStorage.setItem(data?.tenantRequestId, "Accepted");
-      setStatus("Accepted");
-      
-    };
-  
-    const handleReject = () => {
-      localStorage.setItem(data?.tenantRequestId, "Rejected");
-      setStatus("Rejected");
-    };
-  
-    useEffect(() => {
-      if (data?.tenantRequestId) {
-        const savedStatus = localStorage.getItem(data?.tenantRequestId);
-        if (savedStatus) {
-          setStatus(savedStatus);
-        } else {
-          getCurrentTenantRequest(data.tenantRequestId);
-        }
+      if (propertyData?.tenantId !== 'none') {
+        setIsAssigned(true); // Disable buttons if tenant is already assigned
+
       }
-    }, [data]);
-  
-    return (
-      <div className="w-full min-h-[100px] p-4 flex-wrap flex items-center justify-between gap-3 border-b border-gray-300 bg-[#fafafa]">
-        <div className="w-[60px] h-[60px] rounded-full bg-gray-400">
-          <img
-            src={
-              requestDoc?.img && requestDoc?.img !== "" ? requestDoc?.img : avatar
-            }
-            alt="User Avatar"
-            className="rounded-full w-full h-full object-cover"
-          />
-        </div>
-  
-        <div>
-          <p className="text-[16px] font-semibold">{data?.desc}</p>
-        </div>
-  
-        <div className="w-[200px]">
-          {status === null ? (
-            <>
-              <button
-                onClick={handleAccept}
-                className="bg-[#0b1D27] text-white rounded-md p-2 px-4"
-              >
-                {loading ? <Loadercomponent /> : "Accept"}
-              </button>
-              <button
-                onClick={handleReject}
-                className="bg-[#fff] font-medium text-[#0b1D27] border border-[#0b1D27] ml-4 rounded-md p-2 px-4"
-              >
-                Reject
-              </button>
-            </>
-          ) : status === "Accepted" ? (
-            <button
-              disabled
-              className="bg-[#1226319d] text-white rounded-md p-2 px-4 cursor-not-allowed"
-            >
-              Accepted
-            </button>
-          ) : (
-            <button
-              disabled
-              className="bg-[#fff] text-gray-400 border border-gray-300 ml-4 rounded-md p-2 px-4 cursor-not-allowed"
-            >
-              Rejected
-            </button>
-          )}
-        </div>
+    }
+  };
+
+  const updatePropertyTenant = async (propertyId, tenantRequestId) => {
+    try {
+      setLoadingId(tenantRequestId); // Set loading for the current tenant
+      const propertyRef = doc(db, "AllProperties", propertyId);
+
+      const propertySnap = await getDoc(propertyRef);
+
+      if (propertySnap.exists()) {
+        const propertyData = propertySnap.data();
+        await updateDoc(propertyRef, {
+          tenantId: tenantRequestId,
+        });
+        console.log(
+          `Property ${propertyId} updated successfully with tenant ${tenantRequestId}`
+        );
+        setIsAssigned(true); // Mark the property as assigned
+      } else {
+        console.error(`Property with ID ${propertyId} does not exist.`);
+      }
+    } catch (error) {
+      console.error("Error updating property tenant:", error);
+    } finally {
+      setLoadingId(null); // Reset loading after operation
+    }
+  };
+
+  const handleAccept = () => {
+    localStorage.setItem(data?.tenantRequestId, "Accepted");
+    setStatus("Accepted");
+    updatePropertyTenant(data?.propertyId, data?.tenantRequestId);
+  };
+
+  const handleReject = () => {
+    localStorage.setItem(data?.tenantRequestId, "Rejected");
+    setStatus("Rejected");
+  };
+
+  useEffect(() => {
+    if (data?.tenantRequestId) {
+      const savedStatus = localStorage.getItem(data?.tenantRequestId);
+      if (savedStatus) {
+        setStatus(savedStatus);
+      } else {
+        getCurrentTenantRequest(data.tenantRequestId);
+      }
+    }
+    if (data?.propertyId) {
+      checkPropertyAssignment(data?.propertyId);
+    }
+  }, [data]);
+
+  return (
+    <div className="w-full min-h-[100px] p-4 flex-wrap flex items-center justify-between gap-3 border-b border-gray-300 bg-[#fafafa]">
+      <div className="w-[60px] h-[60px] rounded-full bg-gray-400">
+        <img
+          src={requestDoc?.img && requestDoc?.img !== "" ? requestDoc?.img : avatar}
+          alt="User Avatar"
+          className="rounded-full w-full h-full object-cover"
+        />
       </div>
-    );
-  }
-  
-  export default NotificationsBar;
-  
+
+      <div>
+        <p className="text-[16px] font-semibold">{data?.desc}</p>
+      </div>
+
+      <div className="w-[200px]">
+        {status === null && !isAssigned ? (
+          <>
+            <button
+              onClick={handleAccept}
+              disabled={loadingId === data?.tenantRequestId}
+              className={`${
+                loadingId === data?.tenantRequestId
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#0b1D27] text-white"
+              } rounded-md p-2 px-4`}
+            >
+              {loadingId === data?.tenantRequestId ? <Loadercomponent /> : "Accept"}
+            </button>
+            <button
+              onClick={handleReject}
+              disabled={loadingId === data?.tenantRequestId}
+              className={`${
+                loadingId === data?.tenantRequestId
+                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-[#fff] text-[#0b1D27] border border-[#0b1D27]"
+              } ml-4 rounded-md p-2 px-4`}
+            >
+              Reject
+            </button>
+          </>
+        ) : isAssigned ? (
+          <button
+            disabled
+            className="bg-[#1226319d] text-white rounded-md p-2 px-4 cursor-not-allowed"
+          >
+            Tenant Assigned
+          </button>
+        ) : status === "Accepted" ? (
+          <button
+            disabled
+            className="bg-[#1226319d] text-white rounded-md p-2 px-4 cursor-not-allowed"
+          >
+            Accepted
+          </button>
+        ) : (
+          <button
+            disabled
+            className="bg-[#fff] text-gray-400 border border-gray-300 ml-4 rounded-md p-2 px-4 cursor-not-allowed"
+          >
+            Rejected
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default NotificationsBar;
