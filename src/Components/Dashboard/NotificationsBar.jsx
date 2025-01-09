@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import avatar from "../../assets/icons/avatar.png";
 import Loadercomponent from "../loader";
 
 function NotificationsBar({ data }) {
   const [requestDoc, setRequestDoc] = useState(null);
-  const [status, setStatus] = useState(null); // Tracks the current status
-  const [loadingId, setLoadingId] = useState(null); // Tracks which button is loading
-  const [isAssigned, setIsAssigned] = useState(false); // Tracks if a tenant is already assigned
-  const [PropertiesArray, setPropertiesArray] = useState([])
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [isAssigned, setIsAssigned] = useState(false);
+
   const getCurrentTenantRequest = async (tenantRequestId) => {
     const userRef = doc(db, "Users", tenantRequestId);
     const docSnap = await getDoc(userRef);
-    setRequestDoc(docSnap.data());
+    if (docSnap.exists()) {
+      setRequestDoc(docSnap.data());
+    }
   };
 
   const checkPropertyAssignment = async (propertyId) => {
@@ -27,52 +24,41 @@ function NotificationsBar({ data }) {
 
     if (propertySnap.exists()) {
       const propertyData = propertySnap.data();
-      setPropertiesArray((prevArray) => [...prevArray, propertyData]);
-
-      console.log("Updated Properties Array:", PropertiesArray)
-      
-      if (propertyData?.tenantId !== 'none') {
-        setIsAssigned(true); // Disable buttons if tenant is already assigned
-
+      if (propertyData?.tenantId !== "none") {
+        setIsAssigned(true);
       }
     }
   };
 
   const updatePropertyTenant = async (propertyId, tenantRequestId) => {
     try {
-      setLoadingId(tenantRequestId); // Set loading for the current tenant
+      setLoading(true);
       const propertyRef = doc(db, "AllProperties", propertyId);
-
       const propertySnap = await getDoc(propertyRef);
-
+      const propertyRef2 = collection(db, `properties/${UserId}/myproperties`)
+      const q = query(propertyRef2,where("propertName"== propertySnap.data().propertyName))
+      const snapShot2 = await getDocs(`q`)
       if (propertySnap.exists()) {
-        const propertyData = propertySnap.data();
-        await updateDoc(propertyRef, {
-          tenantId: tenantRequestId,
-        });
-        console.log(
-          `Property ${propertyId} updated successfully with tenant ${tenantRequestId}`
-        );
-        setIsAssigned(true); // Mark the property as assigned
-      } else {
-        console.error(`Property with ID ${propertyId} does not exist.`);
+        await updateDoc(propertyRef, { tenantId: tenantRequestId });
+        await updateDoc(q, { tenantId: tenantRequestId });
+        setIsAssigned(true);
+        setStatus("Accepted");
+        localStorage.setItem(data?.tenantRequestId, "Accepted");
       }
     } catch (error) {
       console.error("Error updating property tenant:", error);
     } finally {
-      setLoadingId(null); // Reset loading after operation
+      setLoading(false);
     }
   };
 
   const handleAccept = () => {
-    localStorage.setItem(data?.tenantRequestId, "Accepted");
-    setStatus("Accepted");
     updatePropertyTenant(data?.propertyId, data?.tenantRequestId);
   };
 
   const handleReject = () => {
-    localStorage.setItem(data?.tenantRequestId, "Rejected");
     setStatus("Rejected");
+    localStorage.setItem(data?.tenantRequestId, "Rejected");
   };
 
   useEffect(() => {
@@ -93,7 +79,7 @@ function NotificationsBar({ data }) {
     <div className="w-full min-h-[100px] p-4 flex-wrap flex items-center justify-between gap-3 border-b border-gray-300 bg-[#fafafa]">
       <div className="w-[60px] h-[60px] rounded-full bg-gray-400">
         <img
-          src={requestDoc?.img && requestDoc?.img !== "" ? requestDoc?.img : avatar}
+          src={requestDoc?.img || avatar}
           alt="User Avatar"
           className="rounded-full w-full h-full object-cover"
         />
@@ -108,23 +94,19 @@ function NotificationsBar({ data }) {
           <>
             <button
               onClick={handleAccept}
-              disabled={loadingId === data?.tenantRequestId}
+              disabled={loading}
               className={`${
-                loadingId === data?.tenantRequestId
+                loading
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-[#0b1D27] text-white"
               } rounded-md p-2 px-4`}
             >
-              {loadingId === data?.tenantRequestId ? <Loadercomponent /> : "Accept"}
+              {loading ? <Loadercomponent /> : "Accept"}
             </button>
             <button
               onClick={handleReject}
-              disabled={loadingId === data?.tenantRequestId}
-              className={`${
-                loadingId === data?.tenantRequestId
-                  ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                  : "bg-[#fff] text-[#0b1D27] border border-[#0b1D27]"
-              } ml-4 rounded-md p-2 px-4`}
+              disabled={loading}
+              className="bg-[#fff] text-[#0b1D27] border border-[#0b1D27] ml-4 rounded-md p-2 px-4"
             >
               Reject
             </button>
