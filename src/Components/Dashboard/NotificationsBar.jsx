@@ -10,7 +10,7 @@ function NotificationsBar({ data }) {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAssigned, setIsAssigned] = useState(false);
-  const {UserId} = useAuthContext()
+  const { UserId } = useAuthContext();
 
   const getCurrentTenantRequest = async (tenantRequestId) => {
     const userRef = doc(db, "Users", tenantRequestId);
@@ -28,6 +28,7 @@ function NotificationsBar({ data }) {
       const propertyData = propertySnap.data();
       if (propertyData?.tenantId !== "none") {
         setIsAssigned(true);
+        setStatus("Accepted");
       }
     }
   };
@@ -35,17 +36,38 @@ function NotificationsBar({ data }) {
   const updatePropertyTenant = async (propertyId, tenantRequestId) => {
     try {
       setLoading(true);
+
+      // Step 1: Reference to the document in "AllProperties"
       const propertyRef = doc(db, "AllProperties", propertyId);
       const propertySnap = await getDoc(propertyRef);
-      const propertyRef2 = collection(db, `properties/${UserId}/myproperties`)
-      const q = query(propertyRef2,where("propertName"== propertySnap.data().propertyName))
-      const snapShot2 = await getDocs(`q`)
+
       if (propertySnap.exists()) {
+        const propertyData = propertySnap.data();
+
+        // Step 2: Update the "AllProperties" document
         await updateDoc(propertyRef, { tenantId: tenantRequestId });
-        await updateDoc(q, { tenantId: tenantRequestId });
-        setIsAssigned(true);
-        setStatus("Accepted");
-        localStorage.setItem(data?.tenantRequestId, "Accepted");
+
+        // Step 3: Query the corresponding document in "MyProperties"
+        const userPropertiesRef = collection(db, `properties/${UserId}/myproperties`);
+        const q = query(userPropertiesRef, where("propertyName", "==", propertyData.propertyName));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          // Step 4: Update each matching document in "MyProperties"
+          querySnapshot.forEach(async (docSnap) => {
+            const docRef = doc(db, `properties/${UserId}/myproperties`, docSnap.id);
+            await updateDoc(docRef, { tenantId: tenantRequestId });
+          });
+
+          // Update local states
+          setIsAssigned(true);
+          setStatus("Accepted");
+          console.log(`Updated tenantId in "AllProperties" and "MyProperties" successfully.`);
+        } else {
+          console.warn("No matching document found in MyProperties for the given propertyName.");
+        }
+      } else {
+        console.error("Property document does not exist in AllProperties.");
       }
     } catch (error) {
       console.error("Error updating property tenant:", error);
@@ -58,19 +80,26 @@ function NotificationsBar({ data }) {
     updatePropertyTenant(data?.propertyId, data?.tenantRequestId);
   };
 
-  const handleReject = () => {
-    setStatus("Rejected");
-    localStorage.setItem(data?.tenantRequestId, "Rejected");
+  const handleReject = async () => {
+    try {
+      setLoading(true);
+
+      // Update the rejection status in the "AllProperties" document
+      const propertyRef = doc(db, "AllProperties", data?.propertyId);
+      await updateDoc(propertyRef, { tenantId: "none" });
+
+      setStatus("Rejected");
+      console.log("Tenant request rejected successfully.");
+    } catch (error) {
+      console.error("Error rejecting tenant request:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     if (data?.tenantRequestId) {
-      const savedStatus = localStorage.getItem(data?.tenantRequestId);
-      if (savedStatus) {
-        setStatus(savedStatus);
-      } else {
-        getCurrentTenantRequest(data.tenantRequestId);
-      }
+      getCurrentTenantRequest(data.tenantRequestId);
     }
     if (data?.propertyId) {
       checkPropertyAssignment(data?.propertyId);
