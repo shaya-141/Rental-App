@@ -3,12 +3,14 @@ import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "fireb
 import { db } from "../../utils/firebase";
 import avatar from "../../assets/icons/avatar.png";
 import Loadercomponent from "../loader";
+import { useAuthContext } from "../../Context/Auth";
 
 function NotificationsBar({ data }) {
   const [requestDoc, setRequestDoc] = useState(null);
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAssigned, setIsAssigned] = useState(false);
+  const {UserId} = useAuthContext()
 
   const getCurrentTenantRequest = async (tenantRequestId) => {
     const userRef = doc(db, "Users", tenantRequestId);
