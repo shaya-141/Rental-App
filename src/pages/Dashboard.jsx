@@ -34,7 +34,7 @@ function Dashboard() {
         <>
             {
                 isLoggedin ? (
-                    User?.Role === 'landlord' ? (
+                    User?.Role === 'landowner' ? (
                         <>
                             <AdddpropertyForm />
                             <div className="h-screen overflow-hidden flex p-4">

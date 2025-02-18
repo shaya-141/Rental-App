@@ -86,7 +86,7 @@ function SignupForm() {
 
                     <select name="role" id="role" onChange={(e) => setRole(e.target.value)} className='p-3 rounded border-gray-500 border w-full mt-1'>
                         <option value="tenant">Tenant</option>
-                        <option value="landlord">Landlord</option>
+                        <option value="landowner">Landowner</option>
                     </select>
                 </div>
 
