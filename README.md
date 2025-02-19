@@ -25,7 +25,7 @@
 
 Follow these steps to set up **Gharana** locally on your machine:
 
-### Prerequisites
+### 
 
 Before you start, ensure that the following are installed on your local machine:
 
