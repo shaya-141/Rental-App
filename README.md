@@ -12,7 +12,6 @@
 - **Firebase Authentication**: Secure user registration and login powered by Firebase Authentication.
 
 
-
 ## Technology Stack
 
 - **Frontend**: Built with **React.js** for a responsive, dynamic user experience and **Tailwind CSS** for sleek, customizable design.
