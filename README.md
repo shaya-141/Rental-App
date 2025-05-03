@@ -1,4 +1,8 @@
+# Gharana - A Seamless Rental Platform
 
+**Gharana** is a modern, user-friendly platform designed to simplify the rental experience for both tenants and property owners. Whether you’re searching for a home or listing your property for rent, Gharana ensures smooth, secure, and efficient transactions. Our goal is to provide a trustworthy and intuitive platform where users can easily find and manage rental properties.
+
+## Key Features
 
 - **Property Listings**: Easily browse and filter through available rental properties including residential and commercial spaces.
 - **Tenant Dashboard**: Create and manage your Dashboard to save preferred properties, track rental history, and book new spaces.
